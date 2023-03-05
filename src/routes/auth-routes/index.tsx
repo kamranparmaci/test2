@@ -1,7 +1,13 @@
-import React from "react";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import LoginPage from '../../pages/login';
 
 const AuthRoutes = () => {
-  return <div>AuthRoutes</div>;
+  return (
+    <Routes>
+      <Route path="login" element={<LoginPage />} />
+    </Routes>
+  );
 };
 
 export default AuthRoutes;
