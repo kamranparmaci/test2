@@ -1,14 +1,12 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Grid, TextField, Button } from "@mui/material";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {
   LoginFormProps,
   LoginFormValues,
 } from "../../../types/components/loginForm";
-import { useNavigate } from "react-router-dom";
 
 const LoginForm: FC<LoginFormProps> = ({ submit }) => {
-  const navigate = useNavigate();
   const {
     watch,
     register,
@@ -20,7 +18,6 @@ const LoginForm: FC<LoginFormProps> = ({ submit }) => {
 
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
     submit(data.username, data.password);
-    navigate("/");
   };
 
   return (
