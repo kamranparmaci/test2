@@ -5,7 +5,6 @@ import { ChildrenProps } from "../types/root";
 const Theme: FC<ChildrenProps> = ({ children }) => {
   const theme = createTheme({
     palette: {
-      mode: "dark",
       primary: {
         main: "#303f9f",
       },

@@ -1,7 +1,7 @@
-import { render } from '@testing-library/react';
-import Theme from '../themes';
+import { render } from "@testing-library/react";
+import Theme from "../../themes";
 
-test('rendered children in theme provider', () => {
+test("rendered children in theme provider", () => {
   const { getByText } = render(
     <Theme>
       <div>My Component</div>

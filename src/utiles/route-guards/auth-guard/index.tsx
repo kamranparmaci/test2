@@ -1,8 +1,8 @@
-import React, { FC, useEffect } from 'react';
-import { useContainer } from 'inversify-react';
-import { useNavigate } from 'react-router-dom';
-import { CheckIsAuthenticated } from '../../../services/auth-services';
-import { ChildrenProps } from '../../../types/root';
+import React, { FC, useEffect } from "react";
+import { useContainer } from "inversify-react";
+import { useNavigate } from "react-router-dom";
+import { CheckIsAuthenticated } from "../../../services/auth-services";
+import { ChildrenProps } from "../../../types/root";
 
 const AuthGuard: FC<ChildrenProps> = ({ children }) => {
   const isAuth = useContainer(CheckIsAuthenticated);
@@ -10,7 +10,7 @@ const AuthGuard: FC<ChildrenProps> = ({ children }) => {
 
   useEffect(() => {
     if (!isAuth) {
-      navigate('auth/login', { replace: true });
+      navigate("/auth/login", { replace: true });
     }
   }, [isAuth, navigate]);
 

@@ -1,33 +1,41 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import AuthRoutes from './auth-routes';
-import ProtectedRoutes from './protected-routes';
-import NotMatchPage from '../pages/404';
-import GuestGuard from '../utiles/route-guards/guest-guard';
-import AuthGuard from '../utiles/route-guards/auth-guard';
+import React from "react";
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
 
-const MainRoutes = () => {
-  return (
-    <Routes>
+import GuestGuard from "../utiles/route-guards/guest-guard";
+import AuthGuard from "../utiles/route-guards/auth-guard";
+import DashboardPage from "../pages/dashboard";
+import LoginPage from "../pages/login";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
       <Route
-        path="dashboard/*"
+        path="/"
         element={
           <AuthGuard>
-            <ProtectedRoutes />
+            <DashboardPage />
           </AuthGuard>
         }
       />
       <Route
-        path="auth/*"
+        path="auth/login"
         element={
           <GuestGuard>
-            <AuthRoutes />
+            <LoginPage />
           </GuestGuard>
         }
       />
-      <Route path="*" element={<NotMatchPage />} />
-    </Routes>
-  );
+    </>
+  )
+);
+
+const MainRoutes = () => {
+  return <RouterProvider router={router} />;
 };
 
 export default MainRoutes;
