@@ -3,10 +3,10 @@ import { Container, Grid } from "@mui/material";
 import LoginCard from "../../components/common/login-card";
 import LoginForm from "../../components/forms/login-form";
 import { useContainer } from "inversify-react";
-import { Login } from "../../services/user-services";
+import UserServices from "../../services/user-services";
 
 const LoginPage = () => {
-  const { loggedInUser } = useContainer(Login);
+  const { login } = useContainer(UserServices);
 
   return (
     <Grid container>
@@ -21,7 +21,7 @@ const LoginPage = () => {
         }}
       >
         <LoginCard>
-          <LoginForm submit={loggedInUser} />
+          <LoginForm submit={login} />
         </LoginCard>
       </Grid>
     </Grid>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Login } from "../../services/user-services";
+import UserServices from "../../services/user-services";
 import { Users } from "../../types/root";
 
 const fakeUser: Users[] = [
@@ -27,7 +27,6 @@ test("mock the login process", () => {
   );
   const Login = (username: string, password: string) => {
     const userLoggedIn = mockLogin(fakeUser, password, username);
-    console.log(userLoggedIn);
     return userLoggedIn;
   };
 

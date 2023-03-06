@@ -5,8 +5,10 @@ import {
   LoginFormProps,
   LoginFormValues,
 } from "../../../types/components/loginForm";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm: FC<LoginFormProps> = ({ submit }) => {
+  const navigate = useNavigate();
   const {
     watch,
     register,
@@ -18,6 +20,7 @@ const LoginForm: FC<LoginFormProps> = ({ submit }) => {
 
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
     submit(data.username, data.password);
+    navigate("/");
   };
 
   return (
