@@ -1,6 +1,5 @@
-import React from "react";
-import fakeUsers from "../../assets/data/fakeUsers";
-import { Users } from "../../types/root";
+import React from 'react';
+import fakeUsers from '../../assets/data/fakeUsers';
 
 const UserServices = () => {
   const userExists = (
@@ -17,12 +16,12 @@ const UserServices = () => {
     const isExists = userExists(username, password);
 
     if (isExists) {
-      localStorage.setItem("username", username);
-      localStorage.setItem("password", password);
+      localStorage.setItem('username', username);
+      localStorage.setItem('password', password);
     }
   };
 
   return { login };
 };
 
-export default UserServices;
+export { UserServices };

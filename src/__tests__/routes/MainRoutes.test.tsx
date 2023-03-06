@@ -1,38 +1,34 @@
-import { render } from "@testing-library/react";
-import { MemoryRouter, Routes, Route } from "react-router-dom";
-import DashboardPage from "../../pages/dashboard";
-import LoginPage from "../../pages/login";
+import { render } from '@testing-library/react';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import DashboardPage from '../../pages/dashboard';
+import LoginPage from '../../pages/login';
 
-describe("test routes", () => {
-  const token: string | null = localStorage.getItem("token");
-
-  const baseURL = token ? "/dashboard" : "/auth/login";
-
-  test("rendered the login page when user not logged in", () => {
+describe('test routes', () => {
+  test('rendered the login page when user not logged in', () => {
     render(
-      <MemoryRouter initialEntries={["/auth/login"]}>
+      <MemoryRouter initialEntries={['/auth/login']}>
         <Routes>
           <Route path="/auth/login" element={<LoginPage />} />
         </Routes>
       </MemoryRouter>
     );
 
-    window.history.pushState({}, "", "/auth/login");
+    window.history.pushState({}, '', '/auth/login');
 
-    expect(window.location.href).toBe("http://localhost/auth/login");
+    expect(window.location.href).toBe('http://localhost/auth/login');
   });
 
-  test("rendered the dashboard page when user logged in", () => {
+  test('rendered the dashboard page when user logged in', () => {
     render(
-      <MemoryRouter initialEntries={["/dashboard"]}>
+      <MemoryRouter initialEntries={['/']}>
         <Routes>
-          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/" element={<DashboardPage />} />
         </Routes>
       </MemoryRouter>
     );
 
-    window.history.pushState({}, "", "/dashboard");
+    window.history.pushState({}, '', '/');
 
-    expect(window.location.href).toBe("http://localhost/dashboard");
+    expect(window.location.href).toBe('http://localhost/');
   });
 });
