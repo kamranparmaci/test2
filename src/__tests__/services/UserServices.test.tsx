@@ -1,25 +1,58 @@
-import { UserServices } from '../../services/user-services';
+import { renderHook } from "@testing-library/react-hooks";
+import fakeUsers from "../../assets/data/fakeUsers";
+import { UserServices } from "../../services/user-services";
 
-const fakeUsers = [
-  { username: 'user1', password: 'password1' },
-  { username: 'user2', password: 'password2' },
-];
-describe('login', () => {
-  const { login } = UserServices();
-  it('should store username and password in localStorage if user exists', () => {
-    const setItemSpy = jest.spyOn(localStorage, 'setItem');
-
-    login(fakeUsers[0].username, fakeUsers[0].password);
-
-    expect(setItemSpy).toHaveBeenCalledWith('username', 'user1');
-    expect(setItemSpy).toHaveBeenCalledWith('password', 'password1');
+const { login, isAuthenticated } = UserServices();
+describe("login", () => {
+  beforeEach(() => {
+    jest.spyOn(window.localStorage.__proto__, "setItem");
   });
 
-  it('should not store username and password in localStorage if user does not exist', () => {
-    const setItemSpy = jest.spyOn(localStorage, 'setItem');
+  afterEach(() => {
+    jest.restoreAllMocks();
+    window.localStorage.clear();
+  });
 
-    login('user3', 'password3');
+  it("should store token in local storage when correct credentials are provided", () => {
+    login(fakeUsers[0].username, fakeUsers[0].password);
 
-    expect(setItemSpy).not.toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      "token",
+      JSON.stringify(fakeUsers[0].id)
+    );
+  });
+
+  it("should alert an error message when incorrect credentials are provided", () => {
+    const alertSpy = jest.spyOn(window, "alert").mockImplementation();
+
+    login("invalid_username", "invalid_password");
+
+    expect(alertSpy).toHaveBeenCalledWith(
+      "your password or username is not correct"
+    );
+  });
+});
+
+describe("CheckIsAuthenticated", () => {
+  it("returns true if a token is present in local storage", () => {
+    const setItemSpy = jest.spyOn(Storage.prototype, "setItem");
+
+    // Set the token value in local storage
+    localStorage.setItem("token", "test-token");
+
+    const { result } = renderHook(() => isAuthenticated());
+    expect(result.current).toBe(true);
+
+    localStorage.removeItem("token");
+    setItemSpy.mockRestore();
+  });
+
+  it("returns false if a token is not present in local storage", () => {
+    const setItemSpy = jest.spyOn(Storage.prototype, "setItem");
+
+    const { result } = renderHook(() => isAuthenticated());
+    expect(result.current).toBe(false);
+
+    setItemSpy.mockRestore();
   });
 });

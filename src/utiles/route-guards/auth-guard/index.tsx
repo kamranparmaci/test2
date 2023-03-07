@@ -1,11 +1,12 @@
 import React, { FC, useEffect } from "react";
 import { useContainer } from "inversify-react";
 import { useNavigate } from "react-router-dom";
-import { CheckIsAuthenticated } from "../../../services/auth-services";
 import { ChildrenProps } from "../../../types/root";
+import { UserServices } from "../../../services/user-services";
 
 const AuthGuard: FC<ChildrenProps> = ({ children }) => {
-  const isAuth = useContainer(CheckIsAuthenticated);
+  const { isAuthenticated } = useContainer(UserServices);
+  const isAuth = isAuthenticated();
   const navigate = useNavigate();
 
   useEffect(() => {

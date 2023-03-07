@@ -1,11 +1,14 @@
-import { render, screen } from "@testing-library/react";
+import React from "react";
+import { render } from "@testing-library/react";
+import fakeUsers from "../../assets/data/fakeUsers";
 import DashboardPage from "../../pages/dashboard";
 
-test("rendered dashboard page welcome text", () => {
-  render(<DashboardPage />);
-
-  const dashboardWelcomeText = screen.getByText(
-    /welcome to my dashboard page/i
-  );
-  expect(dashboardWelcomeText).toBeInTheDocument();
+describe("DashboardPage", () => {
+  it("renders the user list", () => {
+    const { getByText } = render(<DashboardPage />);
+    fakeUsers.forEach((user) => {
+      const name = getByText(user.username);
+      expect(name).toBeInTheDocument();
+    });
+  });
 });

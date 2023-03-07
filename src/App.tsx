@@ -5,11 +5,11 @@ import AppContainer from "./AppContainer";
 
 function App() {
   return (
-    <Theme>
-      <AppContainer>
+    <AppContainer>
+      <Theme>
         <MainRoutes />
-      </AppContainer>
-    </Theme>
+      </Theme>
+    </AppContainer>
   );
 }
 
