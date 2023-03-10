@@ -1,8 +1,11 @@
 import useAuth from "../../hooks/useAuth";
+import { useFetchUsers } from "../../hooks/useFetchUsers";
 
 const UserServices = () => {
   const auth = useAuth();
-  return auth;
+  const { users } = useFetchUsers("/data/fakeUsers.json");
+
+  return { auth, users };
 };
 
-export { UserServices };
+export default UserServices;

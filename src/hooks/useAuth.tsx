@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import fakeUsers from "../assets/data/fakeUsers";
 import { Users } from "../types/root";
+import { useFetchUsers } from "./useFetchUsers";
 
 const useAuth = () => {
   const navigate = useNavigate();
+  const { users } = useFetchUsers("/data/fakeUsers.json");
   const userLoggedIn = (
     username: string,
     password: string
   ): Users | undefined =>
-    fakeUsers.find(
+    users.find(
       (user) => user.password === password && user.username === username
     );
 

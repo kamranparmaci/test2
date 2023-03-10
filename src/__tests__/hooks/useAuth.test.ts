@@ -1,8 +1,18 @@
-import { renderHook } from "@testing-library/react-hooks";
-import fakeUsers from "../../assets/data/fakeUsers";
-import { UserServices } from "../../services/user-services";
+import { act, renderHook } from "@testing-library/react-hooks";
+import fakeUsers from "../__mocks__/fake-users/json/fakeUsers";
+import useAuth from "../../hooks/useAuth";
 
-const { login, isAuthenticated } = UserServices();
+const navigateMock = jest.fn();
+jest.mock("react-router-dom", () => {
+  const originalModule = jest.requireActual("react-router-dom");
+  return {
+    ...originalModule,
+    useNavigate: () => navigateMock,
+  };
+});
+
+const { login, isAuthenticated } = useAuth();
+
 describe("login", () => {
   beforeEach(() => {
     jest.spyOn(window.localStorage.__proto__, "setItem");
@@ -20,6 +30,8 @@ describe("login", () => {
       "token",
       JSON.stringify(fakeUsers[0].id)
     );
+
+    expect(navigateMock).toHaveBeenCalledWith("/");
   });
 
   it("should alert an error message when incorrect credentials are provided", () => {
@@ -40,8 +52,10 @@ describe("CheckIsAuthenticated", () => {
     // Set the token value in local storage
     localStorage.setItem("token", "test-token");
 
-    const { result } = renderHook(() => isAuthenticated());
-    expect(result.current).toBe(true);
+    act(() => {
+      const { result } = renderHook(() => isAuthenticated());
+      expect(result.current).toBe(true);
+    });
 
     localStorage.removeItem("token");
     setItemSpy.mockRestore();

@@ -1,15 +1,15 @@
-import React, { FC } from "react";
-import { createTheme, ThemeProvider } from "@mui/material";
-import { ChildrenProps } from "../types/root";
+import React, { FC } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { ChildrenProps } from '../types/root';
 
 const Theme: FC<ChildrenProps> = ({ children }) => {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#303f9f",
+        main: '#303f9f',
       },
       secondary: {
-        main: "#ff1744",
+        main: '#ff1744',
       },
     },
   });

@@ -1,10 +1,11 @@
-import React from "react";
 import { Container, Grid, Fade } from "@mui/material";
-import fakeUsers from "../../assets/data/fakeUsers";
+import { useContainer } from "inversify-react";
 import UserList from "../../components/common/user-list";
 import UserListCard from "../../components/common/users-card";
+import UserServices from "../../services/user-services";
 
 const DashboardPage = () => {
+  const { users } = useContainer(UserServices);
   return (
     <Fade in>
       <Container
@@ -25,7 +26,7 @@ const DashboardPage = () => {
         >
           <Grid item sm={12}>
             <UserListCard>
-              {fakeUsers.map((user, index) => (
+              {users.map((user, index) => (
                 <UserList key={index} user={user} />
               ))}
             </UserListCard>

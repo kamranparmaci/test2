@@ -3,7 +3,6 @@ import { Container } from 'inversify';
 import { Provider, useContainer } from 'inversify-react';
 
 describe('provider', () => {
-  // const hookSpy = jest.spyOn("useContainer");
   const ChildComponent = () => {
     const resolvedContainer = useContainer();
     return <div data-testid="div">{resolvedContainer.id}</div>;

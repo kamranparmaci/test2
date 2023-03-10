@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import fakeUsers from "../../assets/data/fakeUsers";
+import fakeUsers from "../__mocks__/fake-users/json/fakeUsers";
 import DashboardPage from "../../pages/dashboard";
 
 describe("DashboardPage", () => {
