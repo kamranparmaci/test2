@@ -3,35 +3,33 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
-} from 'react-router-dom';
+} from "react-router-dom";
 
-import GuestGuard from '../utiles/route-guards/guest-guard';
-import AuthGuard from '../utiles/route-guards/auth-guard';
-import DashboardPage from '../pages/dashboard';
-import LoginPage from '../pages/login';
+import GuestGuard from "../utils/route-guards/guest-guard";
+import AuthGuard from "../utils/route-guards/auth-guard";
+import DashboardPage from "../pages/dashboard";
+import LoginPage from "../pages/login";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <>
+    <Route path="/">
       <Route
-        path="/"
+        index
         element={
           <AuthGuard>
             <DashboardPage />
           </AuthGuard>
         }
-        errorElement={<div>ddddddd</div>}
       />
       <Route
-        path="auth/login"
+        path="login"
         element={
           <GuestGuard>
             <LoginPage />
           </GuestGuard>
         }
-        errorElement={<div>ssss</div>}
       />
-    </>
+    </Route>
   )
 );
 

@@ -1,11 +1,15 @@
 import { Container, Grid, Fade } from "@mui/material";
-import { useContainer } from "inversify-react";
 import UserList from "../../components/common/user-list";
 import UserListCard from "../../components/common/users-card";
-import UserServices from "../../services/user-services";
+import useFetchUsers from "../../hooks/useFetchUsers";
 
 const DashboardPage = () => {
-  const { users } = useContainer(UserServices);
+  const { users, isLoading, isError } = useFetchUsers();
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (isError) return <div>Please try later</div>;
+
   return (
     <Fade in>
       <Container
@@ -26,7 +30,7 @@ const DashboardPage = () => {
         >
           <Grid item sm={12}>
             <UserListCard>
-              {users.map((user, index) => (
+              {users?.map((user, index) => (
                 <UserList key={index} user={user} />
               ))}
             </UserListCard>

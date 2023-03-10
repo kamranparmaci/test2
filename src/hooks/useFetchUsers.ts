@@ -1,23 +1,30 @@
-import { AxiosError } from "axios";
+import { UseFetchUsersReturnType } from "./../types/hooks/useFetchUsers";
 import { useEffect, useState } from "react";
+import { AxiosError } from "axios";
 import { Users } from "../types/root";
-import { axiosInstance } from "../utiles/axios-instance";
+import { axiosInstance } from "../utils/axios-instance";
 
-export const useFetchUsers = (url: string) => {
+const useFetchUsers = (): UseFetchUsersReturnType => {
   const [users, setUsers] = useState<Users[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const fetchUsers = async () => {
     try {
-      const data = await axiosInstance.get<any, Users[]>(url);
+      setIsError(false);
+      const { data } = await axiosInstance.get<Users[]>("/data/fakeUsers.json");
       setUsers(data);
+      setIsLoading(false);
     } catch (error: AxiosError | any) {
-      console.log(error);
+      setIsLoading(false);
+      setIsError(true);
     }
   };
-
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  return { users };
+  return { users, isLoading, isError };
 };
+
+export default useFetchUsers;

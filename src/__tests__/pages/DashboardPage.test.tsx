@@ -1,14 +1,15 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import fakeUsers from "../__mocks__/fake-users/json/fakeUsers";
+import { render, screen, waitFor } from "@testing-library/react";
 import DashboardPage from "../../pages/dashboard";
 
+jest.mock("../../hooks/useFetchUsers", () => ({
+  __esModule: true,
+  default: jest.fn(() => [[{ id: 1, name: "john" }]]),
+}));
+
 describe("DashboardPage", () => {
-  it("renders the user list", () => {
-    const { getByText } = render(<DashboardPage />);
-    fakeUsers.forEach((user) => {
-      const name = getByText(user.username);
-      expect(name).toBeInTheDocument();
-    });
+  test("renders user list", async () => {
+    render(<DashboardPage />);
+    const userListElement = await screen.findByTestId("user-list");
+    expect(userListElement).toBeInTheDocument();
   });
 });

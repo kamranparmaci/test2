@@ -6,16 +6,16 @@ import LoginPage from "../../pages/login";
 describe("test routes", () => {
   test("rendered the login page when user not logged in", () => {
     render(
-      <MemoryRouter initialEntries={["auth/login"]}>
+      <MemoryRouter initialEntries={["login"]}>
         <Routes>
-          <Route path="auth/login" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </MemoryRouter>
     );
 
-    window.history.pushState({}, "", "auth/login");
+    window.history.pushState({}, "", "/login");
 
-    expect(window.location.href).toBe("http://localhost/auth/login");
+    expect(window.location.href).toBe("http://localhost/login");
   });
 
   test("rendered the dashboard page when user logged in", () => {

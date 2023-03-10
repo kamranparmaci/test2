@@ -17,7 +17,7 @@ interface UserListProps {
 const UserList: FC<UserListProps> = ({ user }) => {
   const theme = useTheme();
   return (
-    <List sx={{ width: "100%" }}>
+    <List sx={{ width: "100%" }} data-testid="user-list">
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt={user.username} src={user.avatar} />

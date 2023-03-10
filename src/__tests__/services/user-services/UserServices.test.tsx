@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react-hooks";
-import fakeUsers from "../__mocks__/fake-users/json/fakeUsers";
-import useAuth from "../../hooks/useAuth";
+import { fakeUsers } from "../../../assets/data/fakeUsers";
+import { IsUserAuth, UserLogin } from "../../../services/user-services";
 
 const navigateMock = jest.fn();
 jest.mock("react-router-dom", () => {
@@ -11,7 +11,7 @@ jest.mock("react-router-dom", () => {
   };
 });
 
-const { login, isAuthenticated } = useAuth();
+const { login } = UserLogin();
 
 describe("login", () => {
   beforeEach(() => {
@@ -53,7 +53,7 @@ describe("CheckIsAuthenticated", () => {
     localStorage.setItem("token", "test-token");
 
     act(() => {
-      const { result } = renderHook(() => isAuthenticated());
+      const { result } = renderHook(() => IsUserAuth().isAuth);
       expect(result.current).toBe(true);
     });
 
@@ -64,8 +64,10 @@ describe("CheckIsAuthenticated", () => {
   it("returns false if a token is not present in local storage", () => {
     const setItemSpy = jest.spyOn(Storage.prototype, "setItem");
 
-    const { result } = renderHook(() => isAuthenticated());
-    expect(result.current).toBe(false);
+    act(() => {
+      const { result } = renderHook(() => IsUserAuth());
+      expect(result.current.isAuth).toBe(false);
+    });
 
     setItemSpy.mockRestore();
   });
