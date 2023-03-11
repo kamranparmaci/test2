@@ -8,4 +8,5 @@ export type Users = {
   password: string;
   email: string;
   avatar: string;
+  description: string;
 };

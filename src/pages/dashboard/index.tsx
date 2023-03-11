@@ -6,9 +6,12 @@ import useFetchUsers from "../../hooks/useFetchUsers";
 const DashboardPage = () => {
   const { users, isLoading, isError } = useFetchUsers();
 
-  if (isLoading) return <div>Loading...</div>;
-
-  if (isError) return <div>Please try later</div>;
+  if (isError)
+    return (
+      <div data-testid="error">
+        <p>Please try later</p>
+      </div>
+    );
 
   return (
     <Fade in>
@@ -29,11 +32,17 @@ const DashboardPage = () => {
           }}
         >
           <Grid item sm={12}>
-            <UserListCard>
-              {users?.map((user, index) => (
-                <UserList key={index} user={user} />
-              ))}
-            </UserListCard>
+            {isLoading ? (
+              <div data-testid="loading">
+                <p>Loading...</p>
+              </div>
+            ) : (
+              <UserListCard>
+                {users?.map((user, index) => (
+                  <UserList key={index} user={user} />
+                ))}
+              </UserListCard>
+            )}
           </Grid>
         </Grid>
       </Container>

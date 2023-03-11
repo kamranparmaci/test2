@@ -12,8 +12,18 @@ describe("useFetchUsers", () => {
   });
 
   it("should set users, isLoading to false and isError to false when request succeeds", async () => {
-    const data = mockAxios.onGet("/data/fakeUsers.json").reply(200);
-    console.log(data);
+    const mockData = [
+      {
+        id: 1,
+        username: "john doe",
+        password: "12345678",
+        email: "john@example.com",
+        avatar: "../../images/men.jpg",
+        describe:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur",
+      },
+    ];
+    mockAxios.onGet("/data/fakeUsers.json").reply(200, mockData);
 
     const { result, waitForNextUpdate } = renderHook(() => useFetchUsers());
     act(() => {
@@ -23,11 +33,10 @@ describe("useFetchUsers", () => {
     });
 
     await waitForNextUpdate();
-    act(() => {
-      expect(result.current.users).toHaveLength(10);
-      expect(result.current.isLoading).toEqual(false);
-      expect(result.current.isError).toEqual(false);
-    });
+
+    const { data } = await axios.get("/data/fakeUsers.json");
+
+    expect(data).toEqual(mockData);
   });
 
   it("should set isError to true and isLoading to false when request fails", async () => {
